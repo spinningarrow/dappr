@@ -1,7 +1,8 @@
 (ns dappr.core
   (:gen-class)
   (:require [clj-http.client :as client]
-            [clojure.data.json :as json]))
+            [clojure.data.json :as json]
+            [hiccup.core]))
 
 (defn- get-method
   ([method]
@@ -49,6 +50,13 @@
     (map #(get % "id"))
     (map get-sizes)
     (map sizes->urls)))
+
+(defn- urls->html [url-map]
+  (html
+    [:a
+     {:href (url-map :large)}
+     [:img
+      {:src (url-map :thumbnail)}]]))
 
 (defn -main
   "I don't do a whole lot ... yet."
