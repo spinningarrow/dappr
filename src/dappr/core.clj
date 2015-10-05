@@ -62,8 +62,3 @@
   "I don't do a whole lot ... yet."
   [& args]
   (println (get-data)))
-
-;; make request to get all photos
-;; get the ids of all photos
-;; get the sizes of each photo
-;; choose certain photo
