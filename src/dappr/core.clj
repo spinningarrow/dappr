@@ -2,7 +2,8 @@
   (:gen-class)
   (:require [clj-http.client :as client]
             [clojure.data.json :as json]
-            [hiccup.core]))
+            [hiccup.core :as hiccup]
+            [clostache.parser :as mustache]))
 
 (defn- get-method
   ([method]
@@ -52,13 +53,19 @@
     (map sizes->urls)))
 
 (defn- urls->html [url-map]
-  (html
+  (hiccup/html
     [:a
      {:href (url-map :large)}
      [:img
       {:src (url-map :thumbnail)}]]))
 
+(defn- generate []
+  (let [htmls (map urls->html (get-data))
+        template-partial (apply str htmls)
+        output (mustache/render-resource "templates/index.mustache" {:contents template-partial})]
+    (spit "index.html" output)))
+
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (println (get-data)))
+  (generate))
