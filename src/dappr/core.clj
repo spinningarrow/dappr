@@ -2,63 +2,41 @@
   (:gen-class)
   (:require [clj-http.client :as client]
             [clojure.data.json :as json]
-            [clostache.parser :as mustache]))
+            [clostache.parser :as mustache]
+            [clojure.walk :as walk]))
 
-(defn- get-method
-  ([method]
-   (get-method method {}))
-  ([method params]
-   (let [url "https://api.flickr.com/services/rest/"
-         query (conj {"api_key" "302f8ca9844b5cb211cab1595c695631"
-                      "format" "json"
-                      "nojsoncallback" 1
-                      "user_id" "79132105@N04"} params)]
-     (client/get url {:query-params (conj query {"method" method})}))))
+(defn- flickr-method
+  [method params]
+  (let [api-url "https://api.flickr.com/services/rest/"
+        default-params {"api_key" "302f8ca9844b5cb211cab1595c695631"
+                        "format" "json"
+                        "nojsoncallback" 1}
+        query-params (conj default-params params {"method" method})
+        result (client/get api-url {:query-params query-params})
+        body (json/read-str (result :body))]
+    body))
 
-(defn- get-public-photos []
-  (let [body (get (get-method "flickr.people.getPublicPhotos") :body)
-        parsed-body (json/read-str body)
-        photos (get (get parsed-body "photos") "photo")]
+(defn- public-photos
+  "Get the public photos for the specified user"
+  [user_id]
+  (let [body (flickr-method
+               "flickr.people.getPublicPhotos"
+               {"user_id" user_id
+                "extras" "url_l"})
+        photos (-> body (get "photos") (get "photo"))]
     photos))
 
-(defn- get-sizes [photo-id]
-  (->
-    (get-method "flickr.photos.getSizes" {"photo_id" photo-id})
-    (:body)
-    (json/read-str)
-    (get "sizes")
-    (get "size")))
-
-(defn- sizes->urls [sizes]
-  (let [filter-fn (fn [label]
-                    (fn [coll]
-                      (=
-                       (get coll "label")
-                       label)))
-        thumbnail-url (get
-                        (first (filter (filter-fn "Thumbnail") sizes))
-                        "source")
-        large-url (get
-                    (first (filter (filter-fn "Large") sizes))
-                    "source")]
-    {:thumbnail thumbnail-url
-     :large large-url}))
-
-(defn- get-data []
-  (->>
-    (get-public-photos)
-    (map #(get % "id"))
-    (map get-sizes)
-    (map sizes->urls)))
-
-(defn- generate []
-  (let [photos (get-data)
-        output (mustache/render-resource
-                 "templates/photoblog.mustache.html"
-                 {:photos photos})]
-    (spit "src/templates/photoblog.html" output)))
+(defn- generate
+  "Generates the output given some photos data and a template path"
+  [data input-file output-file]
+  (let [photos (map walk/keywordize-keys data)
+        output (mustache/render-resource input-file {:photos photos})]
+    (spit output-file output)))
 
 (defn -main
   "I don't do a whole lot ... yet."
   [& args]
-  (generate))
+  (generate
+    (public-photos "79132105@N04")
+    "templates/photoblog.mustache.html"
+    "src/templates/photoblog.html"))
