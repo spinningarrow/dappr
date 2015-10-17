@@ -26,6 +26,18 @@
         photos (-> body (get "photos") (get "photo"))]
     photos))
 
+(defn- photoset-photos
+  "Get the photos from a specified photoset (adding the user_id improves
+  performance according to the Flickr API docs)"
+  [photoset_id user_id]
+  (let [body (flickr-method
+               "flickr.photosets.getPhotos"
+               {"user_id" user_id
+                "photoset_id" photoset_id
+                "extras" "url_l,date_taken,path_alias"})
+        photos (-> body (get "photoset") (get "photo"))]
+    photos))
+
 (defn- generate
   "Generates the output given some photos data and a template path"
   [data input-file output-file]
@@ -37,6 +49,6 @@
   "I don't do a whole lot ... yet."
   [& args]
   (generate
-    (public-photos "79132105@N04")
+    (photoset-photos "72157659937187072" "79132105@N04")
     "templates/photoblog.mustache.html"
     "src/templates/photoblog.html"))
