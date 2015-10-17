@@ -24,5 +24,17 @@
 		{{/photos}}
 
 		<footer>Photographs by Sahil Bajaj</footer>
+
+		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
+		<script>
+			(function () {
+				var times = document.querySelectorAll('time')
+
+				Array.prototype.forEach.call(times, function (time) {
+					var relativeTime = moment(time.getAttribute('datetime')).fromNow()
+					time.innerHTML =  relativeTime
+				})
+			})()
+		</script>
 	</body>
 </html>
