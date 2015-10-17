@@ -3,10 +3,39 @@ body {
 	max-width: 640px;
 }
 
+a:link {
+	color: cornflowerblue;
+	text-decoration: none;
+}
+
+a:hover {
+	background-color: cornflowerblue;
+	color: white;
+}
+
 article {
 	margin-bottom: 2em;
 }
 
 article img {
-	max-width: 100%;
+	min-height: 10em;
+	width: 100%;
+}
+
+article .photo-details {
+	display: flex;
+	flex-direction: row;
+	justify-content: space-between;
+	line-height: 2em;
+}
+
+article .permalink {
+	margin-left: 0.2em;
+}
+
+footer {
+	font-size: 90%;
+	line-height: 2em;
+	opacity: 0.5;
+	text-align: center;
 }

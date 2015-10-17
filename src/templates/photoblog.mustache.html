@@ -10,14 +10,19 @@
 		<h1>Shutter Release</h1>
 
 		{{#photos}}
-			<article>
-				<img alt="{{title}}" src="{{url_l}}">
-				<span>{{title}}</span>
-			</article>
+		<article>
+			<img alt="{{title}}" src="{{url_l}}">
+
+			<div class="photo-details">
+				<span class="caption">{{title}}</span>
+				<div class="meta">
+					<time datetime="{{datetaken}}">{{datetaken}}</time>
+					<a class="permalink" href="https://www.flickr.com/photos/{{pathalias}}/{{id}}">∞</a>
+				</div>
+			</div>
+		</article>
 		{{/photos}}
 
-		<footer>
-			Photographs by Sahil Bajaj
-		</footer>
+		<footer>Photographs by Sahil Bajaj</footer>
 	</body>
 </html>
