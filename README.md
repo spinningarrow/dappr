@@ -2,9 +2,13 @@
 
 Generate a photoblog from Flickr.
 
+## Setup
+
+Copy `secrets.fish.sample` to `secrets.fish` and add the Flickr API key.
+
 ## Usage
 
-    ./phobos > public/index.html
+    ./phobos > index.html
 
 ## Dependencies
 
