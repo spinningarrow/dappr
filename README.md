@@ -1,4 +1,4 @@
-# dappr
+# phobos
 
 Generate a photoblog from Flickr.
 
