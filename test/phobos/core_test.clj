@@ -1,6 +1,6 @@
-(ns dappr.core-test
+(ns phobos.core-test
   (:require [clojure.test :refer :all]
-            [dappr.core :refer :all]))
+            [phobos.core :refer :all]))
 
 (deftest a-test
   (testing "FIXME, I fail."
