@@ -9,21 +9,25 @@
 	<body>
 		<h1>Shutter Release</h1>
 
-		{{#photos}}
-		<article>
-			<img alt="{{title}}" src="{{url_l}}">
+		<main>
+			{{#photos}}
+			<article>
+				<img alt="{{title}}" src="{{url_l}}">
 
-			<div class="photo-details">
-				<span class="caption">{{title}}</span>
-				<div class="meta">
-					<time datetime="{{datetaken}}">{{datetaken}}</time>
-					<a class="permalink" href="https://www.flickr.com/photos/{{pathalias}}/{{id}}">∞</a>
+				<div class="photo-details">
+					<span class="caption">{{title}}</span>
+					<div class="meta">
+						<time datetime="{{datetaken}}">{{datetaken}}</time>
+						<a class="permalink" href="https://www.flickr.com/photos/{{pathalias}}/{{id}}">∞</a>
+					</div>
 				</div>
-			</div>
-		</article>
-		{{/photos}}
+			</article>
+			{{/photos}}
+		</main>
 
-		<footer>Photographs by Sahil Bajaj</footer>
+		<footer>
+			Photographs by <a href="http://sahil.me">Sahil Bajaj</a>
+		</footer>
 
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
 		<script>
