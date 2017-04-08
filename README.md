@@ -1,29 +1,15 @@
 # dappr
 
-FIXME: description
+Generate a photoblog from Flickr.
 
 ## Installation
 
-Download from http://example.com/FIXME.
+1. Install [leiningen][]
+2. Clone the project
 
 ## Usage
 
-FIXME: explanation
+    lein run
 
-    $ java -jar dappr-0.1.0-standalone.jar [args]
 
-## Options
-
-FIXME: listing of options this app accepts.
-
-## Examples
-
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
+[leiningen]: https://leiningen.org/
