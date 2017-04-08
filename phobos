@@ -1,0 +1,9 @@
+#!/usr/bin/env fish
+
+set api_key ""
+set method "flickr.people.getPublicPhotos"
+set user_id ""
+
+set output (curl -s "https://api.flickr.com/services/rest/?api_key=$api_key&format=json&nojsoncallback=1&method=$method&user_id=$user_id&extras=url_l,tags,date_taken,path_alias")
+
+mustache (echo $output | jq '.photos.photo|map(select(.tags | contains("portfolio"))) | { "photos": . } ' | psub) template/photoblog.mustache.html
