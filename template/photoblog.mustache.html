@@ -4,6 +4,7 @@
 		<title>Shutter Release</title>
 		<link rel="stylesheet" href="css/normalize.css">
 		<link rel="stylesheet" href="css/style.css">
+		<link rel="stylesheet" href="css/zoom.css">
 	</head>
 
 	<body>
@@ -12,7 +13,7 @@
 		<main>
 			{{#photos}}
 			<article>
-				<img alt="{{title}}" src="{{url_l}}">
+				<img alt="{{title}}" src="{{url_l}}" data-action="zoom">
 
 				<div class="photo-details">
 					<span class="caption">{{title}}</span>
@@ -29,6 +30,7 @@
 			Photographs by <a href="http://sahil.me">Sahil Bajaj</a>
 		</footer>
 
+		<script src="js/zoom-vanilla.min.js"></script>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.10.6/moment.min.js"></script>
 		<script>
 			(function () {
